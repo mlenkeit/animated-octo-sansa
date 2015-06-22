@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/mlenkeit/animated-octo-sansa/issues"
   },
-  "homepage": "https://github.com/mlenkeit/animated-octo-sansa"
+  "homepage": "https://github.com/mlenkeit/animated-octo-sansa",
+  "dependencies": {
+    "bower": "^1.4.1"
+  }
 }
