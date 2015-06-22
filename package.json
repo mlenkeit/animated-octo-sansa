@@ -1,0 +1,19 @@
+{
+  "name": "animated-octo-sansa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Playground for testing some new JavaScript frameworks",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mlenkeit/animated-octo-sansa.git"
+  },
+  "author": "Maximilian Lenkeit <maximilian.lenkeit@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mlenkeit/animated-octo-sansa/issues"
+  },
+  "homepage": "https://github.com/mlenkeit/animated-octo-sansa"
+}
