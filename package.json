@@ -4,7 +4,10 @@
   "private": true,
   "description": "Playground for testing some new JavaScript frameworks",
   "scripts": {
-    "test": "mocha --compilers .:react-test/compiler.js react-test/*.mocha.js"
+    "react-tdd": "mocha --compilers .:react-test/compiler.js react-test/*.mocha.js --watch",
+    "react-test": "mocha --compilers .:react-test/compiler.js react-test/*.mocha.js",
+    "test": "npm run react-test",
+    "tdd": "npm run react-tdd"
   },
   "repository": {
     "type": "git",
