@@ -6,10 +6,14 @@ var BookmarkForm = require('./../react/BookmarkForm');
 
 describe('BookmarkForm', function() {
 
+  var component, form;
+
+  beforeEach(function() {
+    component = TestUtils.renderIntoDocument(<BookmarkForm />);
+    form = TestUtils.findRenderedDOMComponentWithTag(component, 'form');
+  });
+
   it('should render a form', function() {
-    var control = TestUtils.renderIntoDocument(<BookmarkForm />);
-    var form = TestUtils.findRenderedDOMComponentWithTag(
-     control, 'form');
-     expect(form.getDOMNode().tagName.toLowerCase()).to.equal('form');
+    expect(form.getDOMNode().tagName.toLowerCase()).to.equal('form');
   });
 });
