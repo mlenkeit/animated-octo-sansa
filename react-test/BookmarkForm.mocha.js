@@ -32,9 +32,14 @@ describe('BookmarkForm', function() {
       form = TestUtils.findRenderedDOMComponentWithTag(component, 'form');
     });
 
-    it('should invoke the onSubmit handler when the form is submitted', function() {
+    it('should invoke the onSubmit handler with input data when the form is submitted', function() {
+      var expUrl = 'someUrl';
+      React.findDOMNode(component.refs.url).value = expUrl;
+
       TestUtils.Simulate.submit(form);
       expect(handler.callCount).to.equal(1, 'number of calls');
+      var args = handler.args[0];
+      expect(args[0]).to.have.property('url', expUrl);
     });
   });
 });
