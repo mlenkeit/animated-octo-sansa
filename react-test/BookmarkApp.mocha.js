@@ -11,7 +11,7 @@ var BookmarkList = require('./../react/BookmarkList');
 describe('BookmarkApp', function() {
 
   var component,
-    intlDataFixture, testFixture;
+    intlDataFixture;
 
   beforeEach(function() {
     intlDataFixture = {
