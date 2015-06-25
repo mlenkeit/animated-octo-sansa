@@ -7,9 +7,17 @@ var BookmarkList = module.exports = React.createClass({
   mixins: [IntlMixin],
 
   render: function() {
+    var data = this.props.data || [];
     return (
-      <div>
-      </div>
+      <ul>
+        {data.map(function(bookmark, index) {
+          return (
+            <li key={index}>
+
+            </li>
+          );
+        })}
+      </ul>
     );
   }
 });
