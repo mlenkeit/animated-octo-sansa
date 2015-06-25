@@ -7,12 +7,13 @@ var BookmarkForm = require('./../react/BookmarkForm');
 
 describe('BookmarkForm', function() {
 
-  var component, form, urlInput, testFixture;
+  var component, form, urlInput, tagsInput, testFixture;
 
   beforeEach(function() {
     component = TestUtils.renderIntoDocument(<BookmarkForm />);
     form = TestUtils.findRenderedDOMComponentWithTag(component, 'form');
     urlInput = React.findDOMNode(component.refs.url);
+    tagsInput = React.findDOMNode(component.refs.tags);
 
     testFixture = {
       url: 'http://some-url.com'
@@ -26,6 +27,10 @@ describe('BookmarkForm', function() {
 
   it('renders an input for the url', function() {
     expect(urlInput.tagName.toLowerCase()).to.equal('input');
+  });
+
+  it('renders an input for the tags', function() {
+    expect(tagsInput.tagName.toLowerCase()).to.equal('input');
   });
 
   it('does nothing when the form is submitted', function() {

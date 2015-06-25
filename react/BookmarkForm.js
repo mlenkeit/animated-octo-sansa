@@ -15,6 +15,7 @@ var BookmarkForm = React.createClass({
       <form onSubmit={this.handleSubmit}>
         <label>Bookmark</label>
         <input type="text" ref="url" />
+        <input type="text" ref="tags" />
         <input type="submit" />
       </form>
     );
