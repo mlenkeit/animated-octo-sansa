@@ -108,7 +108,7 @@ describe('BookmarkForm', function() {
         expect(args[0]).to.have.property('url', testFixture.url);
       });
 
-      it('passed the tags to the onSubmit handler', function() {
+      it('passes the tags to the onSubmit handler', function() {
         var args = handler.args[0];
         expect(args[0]).to.have.property('tags', testFixture.tags);
       });
