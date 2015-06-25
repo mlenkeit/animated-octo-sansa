@@ -2,6 +2,7 @@ var React = require('react/addons');
 var ReactIntl = require('react-intl');
 var IntlMixin = ReactIntl.IntlMixin;
 
+var BookmarkList = require('./BookmarkList');
 var BookmarkApp = module.exports = React.createClass({
 
   mixins: [IntlMixin],
@@ -9,6 +10,7 @@ var BookmarkApp = module.exports = React.createClass({
   render: function() {
     return (
       <div>
+        <BookmarkList />
       </div>
     );
   }
