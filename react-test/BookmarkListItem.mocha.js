@@ -26,5 +26,6 @@ describe('BookmarkListItem', function() {
   it('renders the url as anchor', function() {
     var anchor = TestUtils.findRenderedDOMComponentWithTag(component, 'a');
     expect(anchor.getDOMNode().getAttribute('href')).to.equal(testFixture.url);
+    expect(anchor.getDOMNode().textContent).to.equal(testFixture.url);
   });
 });
