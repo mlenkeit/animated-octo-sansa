@@ -9,6 +9,7 @@ var BookmarkListItem = module.exports = React.createClass({
   render: function() {
     return (
       <li>
+        <a href={this.props.children}></a>
       </li>
     );
   }

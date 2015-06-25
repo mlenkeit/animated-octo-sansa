@@ -7,13 +7,24 @@ var BookmarkListItem = require('./../react/BookmarkListItem');
 
 describe('BookmarkListItem', function() {
 
-  var component;
+  var component,
+    testFixture;
 
   beforeEach(function() {
-    component = TestUtils.renderIntoDocument(<BookmarkListItem />);
+    testFixture = {
+      url: 'http://some-url.com',
+      tags: '#aTag #more'
+    };
+
+    component = TestUtils.renderIntoDocument(<BookmarkListItem>{testFixture.url}</BookmarkListItem>);
   });
 
   it('renders a li element', function() {
     expect(component.getDOMNode().tagName.toLowerCase()).to.equal('li');
+  });
+
+  it('renders the url as anchor', function() {
+    var anchor = TestUtils.findRenderedDOMComponentWithTag(component, 'a');
+    expect(anchor.getDOMNode().getAttribute('href')).to.equal(testFixture.url);
   });
 });
