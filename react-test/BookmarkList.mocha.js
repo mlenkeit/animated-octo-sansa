@@ -4,6 +4,7 @@ var React = require('react/addons');
 var sinon = require('sinon');
 var TestUtils = React.addons.TestUtils;
 var BookmarkList = require('./../react/BookmarkList');
+var BookmarkListItem = require('./../react/BookmarkListItem');
 
 describe('BookmarkList', function() {
 
@@ -29,8 +30,8 @@ describe('BookmarkList', function() {
       component.setProps({data: data});
     });
 
-    it('displays a dom element for each data element', function() {
-      var items = TestUtils.scryRenderedDOMComponentsWithTag(component, 'li');
+    it('displays a BookmarkListItem for each data element', function() {
+      var items = TestUtils.scryRenderedComponentsWithType(component, BookmarkListItem);
       expect(items).to.have.length.of(data.length);
     });
   });

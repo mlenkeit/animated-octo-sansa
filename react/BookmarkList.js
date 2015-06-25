@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var ReactIntl = require('react-intl');
 var IntlMixin = ReactIntl.IntlMixin;
+var BookmarkListItem = require('./BookmarkListItem');
 
 var BookmarkList = module.exports = React.createClass({
 
@@ -12,9 +13,7 @@ var BookmarkList = module.exports = React.createClass({
       <ul>
         {data.map(function(bookmark, index) {
           return (
-            <li key={index}>
-
-            </li>
+            <BookmarkListItem key={index} />
           );
         })}
       </ul>
