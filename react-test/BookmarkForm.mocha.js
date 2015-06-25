@@ -7,16 +7,17 @@ var BookmarkForm = require('./../react/BookmarkForm');
 
 describe('BookmarkForm', function() {
 
-  var component, form, testFixture;
+  var component, form, urlInput, testFixture;
 
   beforeEach(function() {
     component = TestUtils.renderIntoDocument(<BookmarkForm />);
     form = TestUtils.findRenderedDOMComponentWithTag(component, 'form');
+    urlInput = React.findDOMNode(component.refs.url);
 
     testFixture = {
       url: 'http://some-url.com'
     };
-    React.findDOMNode(component.refs.url).value = testFixture.url;
+    urlInput.value = testFixture.url;
   });
 
   it('should render a form', function() {
@@ -45,7 +46,7 @@ describe('BookmarkForm', function() {
 
     it('should clear the url input after the form is submitted', function() {
       TestUtils.Simulate.submit(form);
-      var url = React.findDOMNode(component.refs.url).value;
+      var url = urlInput.value;
       expect(url).to.be.empty;
     });
   });
