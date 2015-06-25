@@ -16,9 +16,11 @@ describe('BookmarkForm', function() {
     tagsInput = React.findDOMNode(component.refs.tags);
 
     testFixture = {
-      url: 'http://some-url.com'
+      url: 'http://some-url.com',
+      tags: '#one #two'
     };
     urlInput.value = testFixture.url;
+    tagsInput.value = testFixture.tags;
   });
 
   it('renders a form', function() {
@@ -59,6 +61,11 @@ describe('BookmarkForm', function() {
       it('passes the url to the onSubmit handler', function() {
         var args = handler.args[0];
         expect(args[0]).to.have.property('url', testFixture.url);
+      });
+
+      it('passed the tags to the onSubmit handler', function() {
+        var args = handler.args[0];
+        expect(args[0]).to.have.property('tags', testFixture.tags);
       });
 
       it('clears the url input', function() {

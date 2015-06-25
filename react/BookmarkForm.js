@@ -3,9 +3,12 @@ var BookmarkForm = React.createClass({
   handleSubmit: function() {
     if (this.props.onSubmit) {
       var urlInput = React.findDOMNode(this.refs.url),
-          url = urlInput.value.trim();
+          tagsInput = React.findDOMNode(this.refs.tags),
+          url = urlInput.value.trim(),
+          tags = tagsInput.value.trim();
       this.props.onSubmit({
-        url: url
+        url: url,
+        tags : tags
       });
       urlInput.value = '';
     }
