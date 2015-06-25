@@ -72,6 +72,11 @@ describe('BookmarkForm', function() {
         var url = urlInput.value;
         expect(url).to.be.empty;
       });
+
+      it('clears the tags input', function() {
+        var tags = tagsInput.value;
+        expect(tags).to.be.empty;
+      });
     });
   });
 });

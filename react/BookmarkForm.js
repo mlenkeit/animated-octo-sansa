@@ -11,6 +11,7 @@ var BookmarkForm = React.createClass({
         tags : tags
       });
       urlInput.value = '';
+      tagsInput.value = '';
     }
   },
   render: function() {
