@@ -24,6 +24,10 @@ describe('BookmarkForm', function() {
     expect(form.getDOMNode().tagName.toLowerCase()).to.equal('form');
   });
 
+  it('renders an input for the url', function() {
+    expect(urlInput.tagName.toLowerCase()).to.equal('input');
+  });
+
   it('does nothing when the form is submitted', function() {
     TestUtils.Simulate.submit(form);
   });
