@@ -2,11 +2,12 @@ var React = require('react/addons');
 var BookmarkForm = React.createClass({
   handleSubmit: function() {
     if (this.props.onSubmit) {
-      var url = React.findDOMNode(this.refs.url).value.trim();
+      var urlInput = React.findDOMNode(this.refs.url),
+          url = urlInput.value.trim();
       this.props.onSubmit({
         url: url
       });
-      React.findDOMNode(this.refs.url).value = '';
+      urlInput.value = '';
     }
   },
   render: function() {
