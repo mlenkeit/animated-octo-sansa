@@ -40,6 +40,10 @@ describe('BookmarkForm', function() {
     it('should invoke the onSubmit handler with input data when the form is submitted', function() {
       TestUtils.Simulate.submit(form);
       expect(handler.callCount).to.equal(1, 'number of calls');
+    });
+
+    it('should pass the url to the onSubmit handler when the form is submitted', function() {
+      TestUtils.Simulate.submit(form);
       var args = handler.args[0];
       expect(args[0]).to.have.property('url', testFixture.url);
     });
