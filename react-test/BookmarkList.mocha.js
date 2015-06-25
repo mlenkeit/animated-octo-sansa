@@ -18,32 +18,32 @@ describe('BookmarkList', function() {
     expect(component.getDOMNode().tagName.toLowerCase()).to.be.not.empty;
   });
 
-  describe('with data', function() {
+  describe('with bookmarks', function() {
 
-    var data,
+    var bookmarks,
         items;
 
     beforeEach(function() {
-      data = [1, 23, 42, 678].map(v => ({
+      bookmarks = [1, 23, 42, 678].map(v => ({
         url: `http://some-url.com/${v}`,
         tags: `#static #${v}`
       }));
-      component.setProps({data: data});
+      component.setProps({bookmarks: bookmarks});
       items = TestUtils.scryRenderedComponentsWithType(component, BookmarkListItem);
     });
 
     it('displays a BookmarkListItem for each data element', function() {
-      expect(items).to.have.length.of(data.length);
+      expect(items).to.have.length.of(bookmarks.length);
     });
 
     it('passes the url as children to the BookmarkListItem', function() {
       items.forEach((item, idx) =>
-        expect(item.props.children).to.equal(data[idx].url));
+        expect(item.props.children).to.equal(bookmarks[idx].url));
     });
 
     it('passes the tags via the tags attribute to the BookmarkListItem', function() {
       items.forEach((item, idx) =>
-        expect(item.props.tags).to.equal(data[idx].tags));
+        expect(item.props.tags).to.equal(bookmarks[idx].tags));
     });
   });
 });

@@ -8,10 +8,10 @@ var BookmarkList = module.exports = React.createClass({
   mixins: [IntlMixin],
 
   render: function() {
-    var data = this.props.data || [];
+    var bookmarks = this.props.bookmarks || [];
     return (
       <ul>
-        {data.map(function(bookmark, index) {
+        {bookmarks.map(function(bookmark, index) {
           return (
             <BookmarkListItem key={index} tags={bookmark.tags}>
               {bookmark.url}
