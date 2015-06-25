@@ -4,9 +4,9 @@ var React = require('react/addons');
 var sinon = require('sinon');
 var TestUtils = React.addons.TestUtils;
 
-var BookmarkApp = require('./../react/BookmarkApp');
-var BookmarkForm = require('./../react/BookmarkForm');
-var BookmarkList = require('./../react/BookmarkList');
+var BookmarkApp = require('./../../react/component/BookmarkApp');
+var BookmarkForm = require('./../../react/component/BookmarkForm');
+var BookmarkList = require('./../../react/component/BookmarkList');
 
 describe('BookmarkApp', function() {
 

@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var React = require('react/addons');
 var sinon = require('sinon');
 var TestUtils = React.addons.TestUtils;
-var BookmarkForm = require('./../react/BookmarkForm');
+var BookmarkForm = require('./../../react/component/BookmarkForm');
 
 describe('BookmarkForm', function() {
 

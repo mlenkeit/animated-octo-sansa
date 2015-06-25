@@ -3,8 +3,8 @@ var expect = require('chai').expect;
 var React = require('react/addons');
 var sinon = require('sinon');
 var TestUtils = React.addons.TestUtils;
-var BookmarkList = require('./../react/BookmarkList');
-var BookmarkListItem = require('./../react/BookmarkListItem');
+var BookmarkList = require('./../../react/component/BookmarkList');
+var BookmarkListItem = require('./../../react/component/BookmarkListItem');
 
 describe('BookmarkList', function() {
 
