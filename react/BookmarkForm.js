@@ -1,19 +1,24 @@
 var React = require('react/addons');
-var BookmarkForm = React.createClass({
+
+var BookmarkForm = module.exports = React.createClass({
+
   handleSubmit: function() {
     if (this.props.onSubmit) {
       var urlInput = React.findDOMNode(this.refs.url),
           tagsInput = React.findDOMNode(this.refs.tags),
           url = urlInput.value.trim(),
           tags = tagsInput.value.trim();
+
       this.props.onSubmit({
         url: url,
         tags : tags
       });
+
       urlInput.value = '';
       tagsInput.value = '';
     }
   },
+
   render: function() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -25,5 +30,3 @@ var BookmarkForm = React.createClass({
     );
   }
 });
-
-module.exports = BookmarkForm;
