@@ -40,5 +40,10 @@ describe('BookmarkList', function() {
       items.forEach((item, idx) =>
         expect(item.props.children).to.equal(data[idx].url));
     });
+
+    it('passes the tags via the tags attribute to the BookmarkListItem', function() {
+      items.forEach((item, idx) =>
+        expect(item.props.tags).to.equal(data[idx].tags));
+    });
   });
 });
