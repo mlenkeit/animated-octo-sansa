@@ -7,10 +7,18 @@ var BookmarkForm = require('./../react/BookmarkForm');
 
 describe('BookmarkForm', function() {
 
-  var component, form, urlInput, tagsInput, testFixture;
+  var component,
+      form, urlInput, tagsInput,
+      intlDataFixture, testFixture;
 
   beforeEach(function() {
-    component = TestUtils.renderIntoDocument(<BookmarkForm />);
+    intlDataFixture = {
+      locales: 'en-US',
+      messages: {
+        urlPlaceholder: 'url'
+      }
+    };
+    component = TestUtils.renderIntoDocument(<BookmarkForm {...intlDataFixture}/>);
     form = TestUtils.findRenderedDOMComponentWithTag(component, 'form');
     urlInput = React.findDOMNode(component.refs.url);
     tagsInput = React.findDOMNode(component.refs.tags);
@@ -37,6 +45,36 @@ describe('BookmarkForm', function() {
 
   it('does nothing when the form is submitted', function() {
     TestUtils.Simulate.submit(form);
+  });
+
+  describe('with i18n data', function() {
+
+    [{
+      locales: 'en-US',
+      messages: {
+        urlPlaceholder: 'url2'
+      }
+    }, {
+      locales: 'de-DE',
+      messages: {
+        urlPlaceholder: 'Adresse'
+      }
+    }].forEach(function(intlData) {
+
+      describe(`for locale ${intlData.locales}`, function() {
+
+        beforeEach(function() {
+          component = TestUtils.renderIntoDocument(<BookmarkForm {...intlData}/>);
+          form = TestUtils.findRenderedDOMComponentWithTag(component, 'form');
+          urlInput = React.findDOMNode(component.refs.url);
+          tagsInput = React.findDOMNode(component.refs.tags);
+        });
+
+        it('shows the url placeholder text', function() {
+          expect(urlInput.getAttribute('placeholder')).to.equal(intlData.messages.urlPlaceholder);
+        });
+      });
+    });
   });
 
   describe('with onSubmit handler', function() {

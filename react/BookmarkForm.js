@@ -1,12 +1,16 @@
 var React = require('react/addons');
+var ReactIntl = require('react-intl');
+var IntlMixin = ReactIntl.IntlMixin;
 
 var BookmarkForm = module.exports = React.createClass({
+
+  mixins: [IntlMixin],
 
   handleSubmit: function() {
     if (!this.props.onSubmit) {
       return;
     }
-    
+
     var urlInput = React.findDOMNode(this.refs.url),
         tagsInput = React.findDOMNode(this.refs.tags),
         url = urlInput.value.trim(),
@@ -25,7 +29,10 @@ var BookmarkForm = module.exports = React.createClass({
     return (
       <form onSubmit={this.handleSubmit}>
         <label>Bookmark</label>
-        <input type="text" ref="url" />
+        <input
+          type="text"
+          placeholder={this.formatMessage(this.getIntlMessage('urlPlaceholder'))} 
+          ref="url" />
         <input type="text" ref="tags" />
         <input type="submit" />
       </form>
