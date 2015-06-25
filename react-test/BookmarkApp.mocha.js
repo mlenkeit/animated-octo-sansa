@@ -5,19 +5,32 @@ var sinon = require('sinon');
 var TestUtils = React.addons.TestUtils;
 
 var BookmarkApp = require('./../react/BookmarkApp');
+var BookmarkForm = require('./../react/BookmarkForm');
 var BookmarkList = require('./../react/BookmarkList');
 
 describe('BookmarkApp', function() {
 
   var component,
-    testFixture;
+    intlDataFixture, testFixture;
 
   beforeEach(function() {
-    component = TestUtils.renderIntoDocument(<BookmarkApp />);
+    intlDataFixture = {
+      locales: 'en-US',
+      messages: {
+        urlPlaceholder: 'url',
+        tagsPlaceholder: 'tags'
+      }
+    };
+    component = TestUtils.renderIntoDocument(<BookmarkApp {...intlDataFixture} />);
   });
 
   it('renders a dom element', function() {
     expect(component.getDOMNode().tagName.toLowerCase()).to.be.not.empty;
+  });
+
+  it('renders a BookmarkForm component', function() {
+    var formComponent = TestUtils.findRenderedComponentWithType(component, BookmarkForm);
+    expect(formComponent).to.be.ok;
   });
 
   it('renders a BookmarkList component', function() {
