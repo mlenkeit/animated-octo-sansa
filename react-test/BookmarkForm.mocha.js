@@ -20,11 +20,11 @@ describe('BookmarkForm', function() {
     urlInput.value = testFixture.url;
   });
 
-  it('should render a form', function() {
+  it('renders a form', function() {
     expect(form.getDOMNode().tagName.toLowerCase()).to.equal('form');
   });
 
-  it('should do nothing when the form is submitted', function() {
+  it('does nothing when the form is submitted', function() {
     TestUtils.Simulate.submit(form);
   });
 
@@ -43,16 +43,16 @@ describe('BookmarkForm', function() {
         TestUtils.Simulate.submit(form);
       });
 
-      it('should invoke the onSubmit handler with input data', function() {
+      it('invokes the onSubmit handler with input data', function() {
         expect(handler.callCount).to.equal(1, 'number of calls');
       });
 
-      it('should pass the url to the onSubmit handler', function() {
+      it('passes the url to the onSubmit handler', function() {
         var args = handler.args[0];
         expect(args[0]).to.have.property('url', testFixture.url);
       });
 
-      it('should clear the url input', function() {
+      it('clears the url input', function() {
         var url = urlInput.value;
         expect(url).to.be.empty;
       });
