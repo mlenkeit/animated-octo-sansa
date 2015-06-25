@@ -28,14 +28,13 @@ var BookmarkForm = module.exports = React.createClass({
   render: function() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>Bookmark</label>
         <input
           type="text"
           placeholder={this.formatMessage(this.getIntlMessage('urlPlaceholder'))}
           ref="url" />
         <input
           type="text"
-          placeholder={this.formatMessage(this.getIntlMessage('tagsPlaceholder'))} 
+          placeholder={this.formatMessage(this.getIntlMessage('tagsPlaceholder'))}
           ref="tags" />
         <input type="submit" />
       </form>
