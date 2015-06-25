@@ -37,21 +37,25 @@ describe('BookmarkForm', function() {
       component.setProps({ onSubmit: handler });
     });
 
-    it('should invoke the onSubmit handler with input data when the form is submitted', function() {
-      TestUtils.Simulate.submit(form);
-      expect(handler.callCount).to.equal(1, 'number of calls');
-    });
+    describe('when the form is submitted', function() {
 
-    it('should pass the url to the onSubmit handler when the form is submitted', function() {
-      TestUtils.Simulate.submit(form);
-      var args = handler.args[0];
-      expect(args[0]).to.have.property('url', testFixture.url);
-    });
+      beforeEach(function() {
+        TestUtils.Simulate.submit(form);
+      });
 
-    it('should clear the url input after the form is submitted', function() {
-      TestUtils.Simulate.submit(form);
-      var url = urlInput.value;
-      expect(url).to.be.empty;
+      it('should invoke the onSubmit handler with input data', function() {
+        expect(handler.callCount).to.equal(1, 'number of calls');
+      });
+
+      it('should pass the url to the onSubmit handler', function() {
+        var args = handler.args[0];
+        expect(args[0]).to.have.property('url', testFixture.url);
+      });
+
+      it('should clear the url input', function() {
+        var url = urlInput.value;
+        expect(url).to.be.empty;
+      });
     });
   });
 });
