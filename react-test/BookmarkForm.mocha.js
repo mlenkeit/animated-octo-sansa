@@ -15,7 +15,8 @@ describe('BookmarkForm', function() {
     intlDataFixture = {
       locales: 'en-US',
       messages: {
-        urlPlaceholder: 'url'
+        urlPlaceholder: 'url',
+        tagsPlaceholder: 'tags'
       }
     };
     component = TestUtils.renderIntoDocument(<BookmarkForm {...intlDataFixture}/>);
@@ -52,12 +53,14 @@ describe('BookmarkForm', function() {
     [{
       locales: 'en-US',
       messages: {
-        urlPlaceholder: 'url2'
+        urlPlaceholder: 'url2',
+        tagsPlaceholder: 'tags2'
       }
     }, {
       locales: 'de-DE',
       messages: {
-        urlPlaceholder: 'Adresse'
+        urlPlaceholder: 'Adresse',
+        tagsPlaceholder: 'Markierungen'
       }
     }].forEach(function(intlData) {
 
@@ -72,6 +75,10 @@ describe('BookmarkForm', function() {
 
         it('shows the url placeholder text', function() {
           expect(urlInput.getAttribute('placeholder')).to.equal(intlData.messages.urlPlaceholder);
+        });
+
+        it('shows the tags placeholder text', function() {
+          expect(tagsInput.getAttribute('placeholder')).to.equal(intlData.messages.tagsPlaceholder);
         });
       });
     });
