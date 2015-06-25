@@ -28,8 +28,7 @@ describe('BookmarkForm', function() {
 
     beforeEach(function() {
       handler = sinon.spy();
-      component = TestUtils.renderIntoDocument(<BookmarkForm onSubmit={handler} />);
-      form = TestUtils.findRenderedDOMComponentWithTag(component, 'form');
+      component.setProps({ onSubmit: handler });
     });
 
     it('should invoke the onSubmit handler with input data when the form is submitted', function() {
