@@ -42,5 +42,11 @@ describe('BookmarkForm', function() {
       var args = handler.args[0];
       expect(args[0]).to.have.property('url', testFixture.url);
     });
+
+    it('should clear the url input after the form is submitted', function() {
+      TestUtils.Simulate.submit(form);
+      var url = React.findDOMNode(component.refs.url).value;
+      expect(url).to.be.empty;
+    });
   });
 });

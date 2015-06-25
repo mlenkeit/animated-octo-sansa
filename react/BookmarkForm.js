@@ -6,6 +6,7 @@ var BookmarkForm = React.createClass({
       this.props.onSubmit({
         url: url
       });
+      React.findDOMNode(this.refs.url).value = '';
     }
   },
   render: function() {
