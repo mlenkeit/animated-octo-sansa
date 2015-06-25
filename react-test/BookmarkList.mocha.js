@@ -20,7 +20,8 @@ describe('BookmarkList', function() {
 
   describe('with data', function() {
 
-    var data;
+    var data,
+        items;
 
     beforeEach(function() {
       data = [1, 23, 42, 678].map(v => ({
@@ -28,11 +29,16 @@ describe('BookmarkList', function() {
         tags: `#static #${v}`
       }));
       component.setProps({data: data});
+      items = TestUtils.scryRenderedComponentsWithType(component, BookmarkListItem);
     });
 
     it('displays a BookmarkListItem for each data element', function() {
-      var items = TestUtils.scryRenderedComponentsWithType(component, BookmarkListItem);
       expect(items).to.have.length.of(data.length);
+    });
+
+    it('passes the url as children to the BookmarkListItem', function() {
+      items.forEach((item, idx) =>
+        expect(item.props.children).to.equal(data[idx].url));
     });
   });
 });

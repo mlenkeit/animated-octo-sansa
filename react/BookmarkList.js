@@ -13,7 +13,9 @@ var BookmarkList = module.exports = React.createClass({
       <ul>
         {data.map(function(bookmark, index) {
           return (
-            <BookmarkListItem key={index} />
+            <BookmarkListItem key={index}>
+              {bookmark.url}
+            </BookmarkListItem>
           );
         })}
       </ul>
