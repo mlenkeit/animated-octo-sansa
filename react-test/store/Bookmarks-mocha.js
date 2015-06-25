@@ -1,6 +1,7 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 
+var EventEmitter = require('events').EventEmitter;
 var BookmarksStore = require('./../../react/store/Bookmarks');
 
 describe('BookmarksStore', function() {
@@ -8,7 +9,11 @@ describe('BookmarksStore', function() {
   var store;
 
   beforeEach(function() {
-    store = BookmarksStore;
+    store = new BookmarksStore();
+  });
+
+  it('is an EventEmitter', function() {
+    expect(store).to.be.an.instanceof(EventEmitter);
   });
 
   describe('getAll', function() {

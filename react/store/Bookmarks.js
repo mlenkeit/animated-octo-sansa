@@ -1,6 +1,10 @@
-var Bookmarks = module.exports = {
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
 
-  getAll: function() {
+var Bookmarks = module.exports = function() {
+
+  this.getAll = function() {
     return [];
   }
 };
+util.inherits(Bookmarks, EventEmitter);
