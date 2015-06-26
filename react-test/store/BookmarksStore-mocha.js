@@ -69,10 +69,33 @@ describe('BookmarksStore', function() {
       });
     });
 
-    it('adds the bookmark to the store (optimistically)', function() {
-      var bookmarks = store.getAll();
-      expect(bookmarks).to.have.length.of(1);
-      expect(bookmarks).to.contain(bookmark);
+    describe('when an UpdateBookmark action is dispatched', function() {
+
+      var bookmark;
+
+      beforeEach(function() {
+        // make sure the bookmark is created before update
+        bookmark = {
+          url: 'http://some-url.com',
+          tags: '#aTag'
+        };
+        dispatcher.dispatch({
+          name: 'CreateBookmark',
+          payload: bookmark
+        });
+
+        bookmark.tags += ' #anotherTag';
+        dispatcher.dispatch({
+          name: 'UpdateBookmark',
+          payload: bookmark
+        });
+      });
+
+      it('updates the bookmark in the store', function() {
+        var bookmarks = store.getAll();
+        expect(bookmarks).to.have.length.of(1);
+        expect(bookmarks).to.have.deep.property('[0].tags', bookmark.tags);
+      });
     });
   });
 });

@@ -21,6 +21,14 @@ var Bookmarks = module.exports = function(dispatcher) {
         tags: payload.tags
       });
       eventEmitter.emit(CHANGE_EVENT);
+    },
+    handleUpdateBookmark: function(payload) {
+      data.forEach(function(bookmark) {
+        if (bookmark.url === payload.url) {
+          bookmark.tags = payload.tags;
+          return false;
+        }
+      });
     }
   };
 
