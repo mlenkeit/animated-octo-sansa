@@ -1,11 +1,11 @@
 var EventEmitter = require('events').EventEmitter;
 
-var Bookmarks = module.exports = function(dispatcher) {
+var BookmarksStore = module.exports = function(dispatcher) {
 
   var eventEmitter = new EventEmitter();
   var CHANGE_EVENT = 'change';
 
-  var data = [];
+  var bookmarks = [];
 
   dispatcher.register(function(action) {
     var handlerName = 'handle' + action.name;
@@ -16,14 +16,14 @@ var Bookmarks = module.exports = function(dispatcher) {
 
   var internals = {
     handleCreateBookmark: function(payload) {
-      data.push({
+      bookmarks.push({
         url: payload.url,
         tags: payload.tags
       });
       eventEmitter.emit(CHANGE_EVENT);
     },
     handleUpdateBookmark: function(payload) {
-      data.forEach(function(bookmark) {
+      bookmarks.forEach(function(bookmark) {
         if (bookmark.url === payload.url) {
           bookmark.tags = payload.tags;
           eventEmitter.emit(CHANGE_EVENT);
@@ -34,7 +34,7 @@ var Bookmarks = module.exports = function(dispatcher) {
   };
 
   this.getAll = function() {
-    return data.slice(0);
+    return bookmarks.slice(0);
   };
 
   this.attachChangeListener = function(callback) {
