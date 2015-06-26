@@ -15,10 +15,6 @@ describe('BookmarksStore', function() {
     store = new BookmarksStore(dispatcher);
   });
 
-  it('is an EventEmitter', function() {
-    expect(store).to.be.an.instanceof(EventEmitter);
-  });
-
   describe('getAll', function() {
 
     it('returns an empty array initially', function() {

@@ -1,9 +1,8 @@
-var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
 var Bookmarks = module.exports = function(dispatcher) {
 
-  var eventEmitter = this;
+  var eventEmitter = new EventEmitter();
   var CHANGE_EVENT = 'change';
 
   var data = [];
@@ -34,4 +33,3 @@ var Bookmarks = module.exports = function(dispatcher) {
     eventEmitter.removeListener(CHANGE_EVENT, callback);
   };
 };
-util.inherits(Bookmarks, EventEmitter);
