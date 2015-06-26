@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 
 var EventEmitter = require('events').EventEmitter;
-var BookmarksStore = require('./../../react/store/Bookmarks');
+var BookmarksStore = require('./../../react/store/BookmarksStore');
 
 describe('BookmarksStore', function() {
 
