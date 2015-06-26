@@ -16,13 +16,16 @@ var Bookmarks = module.exports = function(dispatcher) {
 
   var internals = {
     handleCreateBookmark: function(payload) {
-      data.push(payload);
+      data.push({
+        url: payload.url,
+        tags: payload.tags
+      });
       eventEmitter.emit(CHANGE_EVENT);
     }
   };
 
   this.getAll = function() {
-    return data;
+    return data.slice(0);
   };
 
   this.attachChangeListener = function(callback) {

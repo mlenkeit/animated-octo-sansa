@@ -20,6 +20,10 @@ describe('BookmarksStore', function() {
     it('returns an empty array initially', function() {
       expect(store.getAll()).to.have.length.of(0);
     });
+
+    it('returns always a different array reference', function() {
+      expect(store.getAll()).to.not.equal(store.getAll());
+    });
   });
 
   describe('with change listeners', function() {
@@ -52,7 +56,11 @@ describe('BookmarksStore', function() {
       it('adds the bookmark to the store (optimistically)', function() {
         var bookmarks = store.getAll();
         expect(bookmarks).to.have.length.of(1);
-        expect(bookmarks).to.contain(bookmark);
+        expect(bookmarks[0]).to.deep.equal({
+          url: bookmark.url,
+          tags: bookmark.tags
+        });
+        expect(bookmarks[0]).to.not.equal(bookmark, 'not contain the same object reference');
       });
 
       it('notifies change listeners', function() {
