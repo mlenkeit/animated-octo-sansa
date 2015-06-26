@@ -28,18 +28,23 @@ describe('BookmarksStore', function() {
 
   describe('when a CreateBookmark action is dispatched', function() {
 
+    var bookmark;
+
     beforeEach(function() {
+      bookmark = {
+        url: 'http://some-url.com',
+        tags: '#aTag'
+      };
       dispatcher.dispatch({
         name: 'CreateBookmark',
-        payload: {
-          url: 'http://some-url.com',
-          tags: '#aTag'
-        }
+        payload: bookmark
       });
     });
 
     it('adds the bookmark to the store (optimistically)', function() {
-      expect(store.getAll()).to.have.length.of(1);
+      var bookmarks = store.getAll();
+      expect(bookmarks).to.have.length.of(1);
+      expect(bookmarks).to.contain(bookmark);
     });
   });
 });
