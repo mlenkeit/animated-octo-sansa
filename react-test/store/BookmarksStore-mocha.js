@@ -26,18 +26,42 @@ describe('BookmarksStore', function() {
     });
   });
 
-  describe('when a CreateBookmark action is dispatched', function() {
+  describe('with change listeners', function() {
 
-    var bookmark;
+    var attachedChangeListener, detachedChangeListener;
 
     beforeEach(function() {
-      bookmark = {
-        url: 'http://some-url.com',
-        tags: '#aTag'
-      };
-      dispatcher.dispatch({
-        name: 'CreateBookmark',
-        payload: bookmark
+      attachedChangeListener = sinon.spy();
+      detachedChangeListener = sinon.spy();
+      store.attachChangeListener(attachedChangeListener);
+      store.attachChangeListener(detachedChangeListener);
+      store.detachChangeListener(detachedChangeListener);
+    });
+
+    describe('when a CreateBookmark action is dispatched', function() {
+
+      var bookmark;
+
+      beforeEach(function() {
+        bookmark = {
+          url: 'http://some-url.com',
+          tags: '#aTag'
+        };
+        dispatcher.dispatch({
+          name: 'CreateBookmark',
+          payload: bookmark
+        });
+      });
+
+      it('adds the bookmark to the store (optimistically)', function() {
+        var bookmarks = store.getAll();
+        expect(bookmarks).to.have.length.of(1);
+        expect(bookmarks).to.contain(bookmark);
+      });
+
+      it('notifies change listeners', function() {
+        expect(attachedChangeListener.called).to.equal(true, 'attached listener');
+        expect(detachedChangeListener.called).to.equal(false, 'detached listener');
       });
     });
 

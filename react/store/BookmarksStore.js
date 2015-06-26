@@ -3,6 +3,9 @@ var EventEmitter = require('events').EventEmitter;
 
 var Bookmarks = module.exports = function(dispatcher) {
 
+  var eventEmitter = this;
+  var CHANGE_EVENT = 'change';
+
   var data = [];
 
   dispatcher.register(function(action) {
@@ -15,11 +18,20 @@ var Bookmarks = module.exports = function(dispatcher) {
   var internals = {
     handleCreateBookmark: function(payload) {
       data.push(payload);
+      eventEmitter.emit(CHANGE_EVENT);
     }
   };
 
   this.getAll = function() {
     return data;
+  };
+
+  this.attachChangeListener = function(callback) {
+    eventEmitter.on(CHANGE_EVENT, callback);
+  };
+
+  this.detachChangeListener = function(callback) {
+    eventEmitter.removeListener(CHANGE_EVENT, callback);
   };
 };
 util.inherits(Bookmarks, EventEmitter);
