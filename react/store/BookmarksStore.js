@@ -26,6 +26,7 @@ var Bookmarks = module.exports = function(dispatcher) {
       data.forEach(function(bookmark) {
         if (bookmark.url === payload.url) {
           bookmark.tags = payload.tags;
+          eventEmitter.emit(CHANGE_EVENT);
           return false;
         }
       });

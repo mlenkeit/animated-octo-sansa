@@ -84,6 +84,9 @@ describe('BookmarksStore', function() {
           payload: bookmark
         });
 
+        attachedChangeListener.reset();
+        detachedChangeListener.reset();
+
         bookmark.tags += ' #anotherTag';
         dispatcher.dispatch({
           name: 'UpdateBookmark',
@@ -95,6 +98,11 @@ describe('BookmarksStore', function() {
         var bookmarks = store.getAll();
         expect(bookmarks).to.have.length.of(1);
         expect(bookmarks).to.have.deep.property('[0].tags', bookmark.tags);
+      });
+
+      it('notifies change listeners', function() {
+        expect(attachedChangeListener.called).to.equal(true, 'attached listener');
+        expect(detachedChangeListener.called).to.equal(false, 'detached listener');
       });
     });
   });
