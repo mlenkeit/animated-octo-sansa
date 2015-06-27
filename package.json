@@ -8,8 +8,8 @@
     "react-tdd": "mocha --compilers .:react-test/compiler.js react-test/**/*-mocha.js --watch",
     "react-test": "mocha --compilers .:react-test/compiler.js react-test/**/*-mocha.js",
     "build": "npm run react-build",
-    "start": "npm run build && http-server ./dist -i -d -o",
-    "test": "npm run react-test",
+    "start": "http-server ./dist -i -d -o",
+    "test": "npm run react-test && npm run build",
     "tdd": "npm run react-tdd"
   },
   "repository": {
