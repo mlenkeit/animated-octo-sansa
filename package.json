@@ -9,7 +9,7 @@
     "react-test": "mocha --compilers .:react-test/compiler.js react-test/**/*-mocha.js",
     "build": "npm run react-build",
     "start": "http-server ./dist -i -d -o",
-    "test": "npm run react-test && npm run build",
+    "test": "npm run build",
     "tdd": "npm run react-tdd"
   },
   "repository": {
