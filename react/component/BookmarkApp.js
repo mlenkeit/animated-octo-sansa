@@ -8,6 +8,18 @@ var BookmarkApp = module.exports = React.createClass({
 
   mixins: [IntlMixin],
 
+  componentDidMount: function() {
+    this.props.store.attachChangeListener(this._handleChange);
+  },
+
+  componentWillUnmount: function() {
+    this.props.store.detachChangeListener(this._handleChange);
+  },
+
+  _handleChange: function() {
+
+  },
+
   render: function() {
     return (
       <div>
