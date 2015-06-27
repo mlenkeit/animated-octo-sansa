@@ -8,7 +8,7 @@
     "react-tdd": "mocha --compilers .:react-test/compiler.js react-test/**/*-mocha.js --watch",
     "react-test": "mocha --compilers .:react-test/compiler.js react-test/**/*-mocha.js",
     "build": "npm run react-build",
-    "start": "http-server ./dist -i -d -o",
+    "start": "npm run build && http-server ./dist -i -d -o",
     "test": "npm run react-test",
     "tdd": "npm run react-tdd"
   },
@@ -23,18 +23,18 @@
   },
   "homepage": "https://github.com/mlenkeit/animated-octo-sansa",
   "dependencies": {
+    "browserify": "^10.2.4",
+    "http-server": "^0.8.0",
     "flux": "^2.0.3",
     "react": "^0.13.3",
-    "react-intl": "^1.2.0"
+    "react-intl": "^1.2.0",
+    "react-tools": "^0.13.3",
+    "uglify-js": "^2.4.23"
   },
   "devDependencies": {
-    "browserify": "^10.2.4",
     "chai": "^3.0.0",
-    "http-server": "^0.8.0",
     "jsdom": "3.1.2",
     "mocha": "^2.2.5",
-    "react-tools": "^0.13.3",
-    "sinon": "^1.15.3",
-    "uglify-js": "^2.4.23"
+    "sinon": "^1.15.3"
   }
 }
