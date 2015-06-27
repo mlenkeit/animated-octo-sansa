@@ -17,13 +17,17 @@ var BookmarkApp = module.exports = React.createClass({
   },
 
   _handleChange: function() {
+    
+  },
 
+  _handleSubmit: function(data) {
+    this.props.actions.create(data.url, data.tags);
   },
 
   render: function() {
     return (
       <div>
-        <BookmarkForm />
+        <BookmarkForm onSubmit={this._handleSubmit}/>
         <BookmarkList bookmarks={this.props.store.getAll()} />
       </div>
     );

@@ -4,6 +4,7 @@ var React = require('react/addons');
 var sinon = require('sinon');
 var TestUtils = React.addons.TestUtils;
 
+var BookmarkActions = require('./../action/FakeBookmarkActions');
 var BookmarkApp = require('./../../react/component/BookmarkApp');
 var BookmarkForm = require('./../../react/component/BookmarkForm');
 var BookmarkList = require('./../../react/component/BookmarkList');
@@ -13,7 +14,7 @@ describe('BookmarkApp', function() {
 
   var component,
     intlDataFixture,
-    bookmarksStore;
+    bookmarkActions, bookmarksStore;
 
   beforeEach(function() {
     intlDataFixture = {
@@ -23,8 +24,9 @@ describe('BookmarkApp', function() {
         tagsPlaceholder: 'tags'
       }
     };
+    bookmarkActions = new BookmarkActions();
     bookmarksStore = new BookmarksStore();
-    component = TestUtils.renderIntoDocument(<BookmarkApp store={bookmarksStore} {...intlDataFixture} />);
+    component = TestUtils.renderIntoDocument(<BookmarkApp actions={bookmarkActions} store={bookmarksStore} {...intlDataFixture} />);
   });
 
   it('renders a dom element', function() {
@@ -48,6 +50,30 @@ describe('BookmarkApp', function() {
   it('passes the bookmarks from the store to the BookmarkList component', function() {
     var listComponent = TestUtils.findRenderedComponentWithType(component, BookmarkList);
     expect(listComponent.props.bookmarks).to.equal(bookmarksStore.getAll());
+  });
+
+  describe('when the form is submitted', function() {
+
+    var formComponent,
+      url, tags;
+
+    beforeEach(function() {
+      url = 'http://some-url.com';
+      tags = '#someTag';
+
+      formComponent = TestUtils.findRenderedComponentWithType(component, BookmarkForm);
+      formComponent.props.onSubmit({
+        url: url,
+        tags: tags
+      });
+    });
+
+    it('triggers the create action', function() {
+      expect(bookmarkActions.create.called).to.be.true;
+      var args = bookmarkActions.create.args[0];
+      expect(args[0]).to.equal(url);
+      expect(args[1]).to.equal(tags);
+    });
   });
 
   describe('when unmounted', function() {
