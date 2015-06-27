@@ -44,8 +44,12 @@ describe('BookmarkForm', function() {
     expect(tagsInput.tagName.toLowerCase()).to.equal('input');
   });
 
-  it('does nothing when the form is submitted', function() {
-    TestUtils.Simulate.submit(form);
+  it('prevents the default action when the form is submitted', function() {
+    var fakeEvent = {
+      preventDefault: sinon.spy()
+    };
+    TestUtils.Simulate.submit(form, fakeEvent);
+    expect(fakeEvent.preventDefault.called).to.be.true;
   });
 
   describe('with i18n data', function() {

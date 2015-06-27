@@ -6,7 +6,8 @@ var BookmarkForm = module.exports = React.createClass({
 
   mixins: [IntlMixin],
 
-  handleSubmit: function() {
+  handleSubmit: function(e) {
+    e.preventDefault();
     if (!this.props.onSubmit) {
       return;
     }
