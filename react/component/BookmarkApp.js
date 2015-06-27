@@ -16,8 +16,16 @@ var BookmarkApp = module.exports = React.createClass({
     this.props.store.detachChangeListener(this._handleChange);
   },
 
+  getInitialState: function() {
+    return {
+      bookmarks: this.props.store.getAll()
+    }
+  },
+
   _handleChange: function() {
-    
+    this.setState({
+      bookmarks: this.props.store.getAll()
+    });
   },
 
   _handleSubmit: function(data) {
@@ -28,7 +36,7 @@ var BookmarkApp = module.exports = React.createClass({
     return (
       <div>
         <BookmarkForm onSubmit={this._handleSubmit}/>
-        <BookmarkList bookmarks={this.props.store.getAll()} />
+        <BookmarkList bookmarks={this.state.bookmarks} />
       </div>
     );
   }

@@ -76,6 +76,21 @@ describe('BookmarkApp', function() {
     });
   });
 
+  describe('when the BookmarksStore notifies change listeners', function() {
+
+    var newBookmarks;
+
+    beforeEach(function() {
+      newBookmarks = [];
+      bookmarksStore.__simulateUpdateBookmarks(newBookmarks);
+    });
+
+    it('passes the updated bookmarks from the store to the BookmarkList component', function() {
+      var listComponent = TestUtils.findRenderedComponentWithType(component, BookmarkList);
+      expect(listComponent.props.bookmarks).to.equal(newBookmarks);
+    });
+  });
+
   describe('when unmounted', function() {
 
     beforeEach(function() {

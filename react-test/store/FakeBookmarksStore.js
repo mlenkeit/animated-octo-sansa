@@ -15,4 +15,9 @@ var FakeBookmarksStore = module.exports = function() {
   this.detachChangeListener = sinon.spy(function(callback) {
     eventEmitter.removeListener(CHANGE_EVENT, callback);
   });
+
+  this.__simulateUpdateBookmarks = function(newBookmarks) {
+    this.getAll.returns(newBookmarks);
+    eventEmitter.emit(CHANGE_EVENT);
+  };
 };
