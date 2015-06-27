@@ -24,7 +24,7 @@ var BookmarkApp = module.exports = React.createClass({
     return (
       <div>
         <BookmarkForm />
-        <BookmarkList />
+        <BookmarkList bookmarks={this.props.store.getAll()} />
       </div>
     );
   }

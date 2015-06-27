@@ -45,6 +45,11 @@ describe('BookmarkApp', function() {
     expect(bookmarksStore.attachChangeListener.called).to.be.true;
   });
 
+  it('passes the bookmarks from the store to the BookmarkList component', function() {
+    var listComponent = TestUtils.findRenderedComponentWithType(component, BookmarkList);
+    expect(listComponent.props.bookmarks).to.equal(bookmarksStore.getAll());
+  });
+
   describe('when unmounted', function() {
 
     beforeEach(function() {
