@@ -5,9 +5,11 @@
   "description": "Playground for testing some new JavaScript frameworks",
   "scripts": {
     "react-build": "jsx react dist/react-build && browserify dist/react-build/bootstrap.js -o dist/react.bundle.js && uglifyjs dist/react.bundle.js -o dist/react.bundle.min.js && cp react/index.html dist/react.html",
+    "react-linter": "eslint react",
     "react-tdd": "mocha --compilers .:react-test/compiler.js react-test/**/*-mocha.js --watch",
     "react-test": "mocha --compilers .:react-test/compiler.js react-test/**/*-mocha.js",
     "build": "npm run react-build",
+    "linter": "npm run react-linter",
     "start": "http-server ./dist -i -d -o",
     "test": "npm run build",
     "tdd": "npm run react-tdd"
@@ -33,6 +35,8 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
+    "eslint": "^0.24.0",
+    "eslint-plugin-react": "^2.5.2",
     "jsdom": "3.1.2",
     "mocha": "^2.2.5",
     "sinon": "^1.15.3"
