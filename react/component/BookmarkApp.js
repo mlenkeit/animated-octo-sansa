@@ -1,10 +1,12 @@
+'use strict';
+
 var React = require('react/addons');
 var ReactIntl = require('react-intl');
 var IntlMixin = ReactIntl.IntlMixin;
-
 var BookmarkForm = require('./BookmarkForm');
 var BookmarkList = require('./BookmarkList');
-var BookmarkApp = module.exports = React.createClass({
+
+module.exports = React.createClass({
 
   mixins: [IntlMixin],
 
@@ -19,7 +21,7 @@ var BookmarkApp = module.exports = React.createClass({
   getInitialState: function() {
     return {
       bookmarks: this.props.store.getAll()
-    }
+    };
   },
 
   _handleChange: function() {

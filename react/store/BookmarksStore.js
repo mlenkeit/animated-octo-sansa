@@ -1,18 +1,13 @@
+'use strict';
+
 var EventEmitter = require('events').EventEmitter;
 
-var BookmarksStore = module.exports = function(dispatcher) {
+module.exports = function(dispatcher) {
 
   var eventEmitter = new EventEmitter();
   var CHANGE_EVENT = 'change';
 
   var bookmarks = [];
-
-  dispatcher.register(function(action) {
-    var handlerName = 'handle' + action.name;
-    if (internals[handlerName]) {
-      internals[handlerName](action.payload);
-    }
-  });
 
   var internals = {
     handleCreateBookmark: function(payload) {
@@ -32,6 +27,13 @@ var BookmarksStore = module.exports = function(dispatcher) {
       });
     }
   };
+
+  dispatcher.register(function(action) {
+    var handlerName = 'handle' + action.name;
+    if (internals[handlerName]) {
+      internals[handlerName](action.payload);
+    }
+  });
 
   this.getAll = function() {
     return bookmarks.slice(0);

@@ -1,8 +1,10 @@
+'use strict';
+
 var React = require('react/addons');
 var ReactIntl = require('react-intl');
 var IntlMixin = ReactIntl.IntlMixin;
 
-var BookmarkForm = module.exports = React.createClass({
+module.exports = React.createClass({
 
   mixins: [IntlMixin],
 
@@ -19,7 +21,7 @@ var BookmarkForm = module.exports = React.createClass({
 
     this.props.onSubmit({
       url: url,
-      tags : tags
+      tags: tags
     });
 
     urlInput.value = '';

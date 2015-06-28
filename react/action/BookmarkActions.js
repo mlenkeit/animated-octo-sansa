@@ -1,4 +1,6 @@
-var BookmarkActions = module.exports = function(dispatcher) {
+'use strict';
+
+module.exports = function(dispatcher) {
 
   this.create = function(url, tags) {
     dispatcher.dispatch({
