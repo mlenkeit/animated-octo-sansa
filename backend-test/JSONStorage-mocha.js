@@ -44,9 +44,7 @@ describe('JSONStorage', function() {
     });
 
     it('responds with an empty array by default', function(done) {
-      request(app)
-        .get('/bookmarks')
-        .expect('[]', done);
+      request(app).get(path).expect('[]', done);
     });
 
     it('responds with the content of the JSON file', function(done) {
