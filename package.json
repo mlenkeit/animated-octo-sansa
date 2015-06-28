@@ -14,7 +14,7 @@
     "build": "npm run react-build",
     "linter": "eslint backend backend-test react react-test",
     "start": "http-server ./dist -i -d -o",
-    "test": "mocha --compilers react:react-test/compiler.js **/*-mocha.js",
+    "test": "npm run linter && mocha --compilers react:react-test/compiler.js **/*-mocha.js",
     "tdd": "npm run react-tdd"
   },
   "repository": {
