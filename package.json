@@ -11,7 +11,7 @@
     "build": "npm run react-build",
     "linter": "npm run react-linter ",
     "start": "http-server ./dist -i -d -o",
-    "test": "npm run build",
+    "test": "npm run react-test && npm run build",
     "tdd": "npm run react-tdd"
   },
   "repository": {
