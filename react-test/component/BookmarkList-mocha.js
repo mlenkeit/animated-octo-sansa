@@ -1,7 +1,10 @@
+/*global beforeEach, describe, it,*/
+/*eslint no-unused-expressions: 0*/
+'use strict';
+
 require('./testdom')('<html><body></body></html>');
 var expect = require('chai').expect;
 var React = require('react/addons');
-var sinon = require('sinon');
 var TestUtils = React.addons.TestUtils;
 var BookmarkList = require('./../../react/component/BookmarkList');
 var BookmarkListItem = require('./../../react/component/BookmarkListItem');

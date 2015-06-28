@@ -1,7 +1,9 @@
+'use strict';
+
 var sinon = require('sinon');
 var EventEmitter = require('events').EventEmitter;
 
-var FakeBookmarksStore = module.exports = function() {
+module.exports = function() {
 
   var eventEmitter = new EventEmitter();
   var CHANGE_EVENT = 'change';

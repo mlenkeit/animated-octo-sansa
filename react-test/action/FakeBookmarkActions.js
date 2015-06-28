@@ -1,6 +1,8 @@
+'use strict';
+
 var sinon = require('sinon');
 
-var FakeBookmarkActions = module.exports = function() {
+module.exports = function() {
 
   this.create = sinon.spy();
 };

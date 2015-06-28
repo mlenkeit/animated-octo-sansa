@@ -1,8 +1,10 @@
+/*global beforeEach, describe, it,*/
+/*eslint no-unused-expressions: 0*/
+'use strict';
+
 var expect = require('chai').expect;
 var sinon = require('sinon');
-
 var Dispatcher = require('flux').Dispatcher;
-var EventEmitter = require('events').EventEmitter;
 var BookmarkActions = require('./../../react/action/BookmarkActions');
 
 describe('BookmarkActions', function() {
