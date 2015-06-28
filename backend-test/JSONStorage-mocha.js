@@ -68,4 +68,45 @@ describe('JSONStorage', function() {
       });
     });
   });
+
+  describe('POST /bookmarks', function() {
+
+    var path = '/bookmarks';
+
+    describe('with valid payload', function() {
+
+      var payload;
+
+      beforeEach(function() {
+        payload = {
+          url: 'http://some-url.com',
+          tags: '#some #tag'
+        };
+      });
+
+      it('responds with 201', function(done) {
+        request(app)
+          .post(path)
+          .type('form')
+          .send(payload)
+          .expect(201, done);
+      });
+    });
+
+    describe('with invalid payload', function() {
+
+      var payload;
+
+      beforeEach(function() {
+        payload = {};
+      });
+
+      it('responds with 400', function(done) {
+        request(app).post(path)
+          .type('form')
+          .send(payload)
+          .expect(400, done);
+      });
+    });
+  });
 });
