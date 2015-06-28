@@ -6,7 +6,7 @@ module.exports = function() {
   var router = new express.Router();
 
   router.get('/bookmarks', function(req, res) {
-    res.sendStatus(200);
+    res.json([]);
   });
 
   return router;

@@ -22,5 +22,15 @@ describe('JSONStorage', function() {
     it('responds with 200', function(done) {
       request(app).get(path).expect(200, done);
     });
+
+    it('responds in json format', function(done) {
+      request(app).get(path).expect('Content-Type', /json/, done);
+    });
+
+    it('responds with an array', function(done) {
+      request(app)
+        .get('/bookmarks')
+        .expect('[]', done);
+    });
   });
 });
