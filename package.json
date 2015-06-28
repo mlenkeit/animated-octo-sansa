@@ -29,23 +29,23 @@
   "homepage": "https://github.com/mlenkeit/animated-octo-sansa",
   "dependencies": {
     "body-parser": "1.8.1",
-    "browserify": "^10.2.4",
     "express": "^4.13.0",
     "flux": "^2.0.3",
     "http-server": "^0.8.0",
     "react": "^0.13.3",
-    "react-intl": "^1.2.0",
-    "react-tools": "^0.13.3",
-    "uglify-js": "^2.4.23"
+    "react-intl": "^1.2.0"
   },
   "devDependencies": {
+    "browserify": "^10.2.4",
     "chai": "^3.0.0",
     "eslint": "^0.24.0",
     "eslint-plugin-react": "^2.5.2",
     "jsdom": "3.1.2",
     "mocha": "^2.2.5",
     "mock-fs": "^3.0.0",
+    "react-tools": "^0.13.3",
     "sinon": "^1.15.3",
-    "supertest": "^1.0.1"
+    "supertest": "^1.0.1",
+    "uglify-js": "^2.4.23"
   }
 }
