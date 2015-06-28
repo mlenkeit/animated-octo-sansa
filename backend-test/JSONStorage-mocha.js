@@ -13,6 +13,7 @@ describe('JSONStorage', function() {
       filename = 'bookmarks.json', filepath = __dirname + '/' + filename;
 
   var mockStorageData = function(data) {
+    // https://github.com/tschaub/mock-fs/issues/47
     var filesystem = {};
     filesystem[__dirname] = {};
     filesystem[__dirname][filename] = JSON.stringify(data);
@@ -24,16 +25,19 @@ describe('JSONStorage', function() {
     app.use('/', new JSONStorage({
       filepath: filepath
     }));
-    mockStorageData([]);
-  });
-
-  afterEach(function() {
-    fs.restore();
   });
 
   describe('GET /bookmarks', function() {
 
     var path = '/bookmarks';
+
+    beforeEach(function() {
+      mockStorageData([]);
+    });
+
+    afterEach(function() {
+      fs.restore();
+    });
 
     it('responds with 200', function(done) {
       request(app).get(path).expect(200, done);
