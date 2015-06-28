@@ -4,6 +4,7 @@
   "private": true,
   "description": "Playground for testing some new JavaScript frameworks",
   "scripts": {
+    "backend-linter": "eslint backend backend-test",
     "backend-tdd": "mocha backend-test/**/*-mocha.js --watch",
     "react-build": "jsx react dist/react-build && browserify dist/react-build/bootstrap.js -o dist/react.bundle.js && uglifyjs dist/react.bundle.js -o dist/react.bundle.min.js && cp react/index.html dist/react.html",
     "react-linter": "eslint react react-test",
