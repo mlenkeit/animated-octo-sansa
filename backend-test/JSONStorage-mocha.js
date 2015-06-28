@@ -54,5 +54,16 @@ describe('JSONStorage', function() {
       mockStorageData(json);
       request(app).get(path).expect(JSON.stringify(json), done);
     });
+
+    describe('when the file is not found', function() {
+
+      beforeEach(function() {
+        fs({});
+      });
+
+      it('responds with 500', function(done) {
+        request(app).get(path).expect(500, done);
+      });
+    });
   });
 });
