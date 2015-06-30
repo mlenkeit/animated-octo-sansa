@@ -2,25 +2,38 @@
 /*eslint no-unused-expressions: 0*/
 'use strict';
 
+var rewire = require('rewire');
 var express = require('express');
-var fs = require('mock-fs');
 var request = require('supertest');
-var JSONStorage = require('./../backend/JSONStorage');
+var JSONStorage = rewire('./../backend/JSONStorage');
 
 describe('JSONStorage', function() {
 
   var app,
-      filename = 'bookmarks.json', filepath = __dirname + '/' + filename;
+      filename = 'bookmarks.json', filepath = __dirname + '/' + filename,
+      fsMock;
 
-  var mockStorageData = function(data) {
-    // https://github.com/tschaub/mock-fs/issues/47
-    var filesystem = {};
-    filesystem[__dirname] = {};
-    filesystem[__dirname][filename] = JSON.stringify(data);
-    fs(filesystem);
+  var mockFilesystem = function() {
+    var fs = {
+      fileContentsByPath: {},
+      readFile: function(path, cb) {
+        var content = this.fileContentsByPath[path];
+        return process.nextTick(function() {
+          return cb(!content, new Buffer(content || ''));
+        });
+      },
+      __setStorageData: function(data) {
+        this.fileContentsByPath[filepath] = data ? JSON.stringify(data) : null;
+      }
+    };
+    JSONStorage.__set__("fs", fs);
+    return fs
   };
 
   beforeEach(function() {
+    fsMock = mockFilesystem();
+    fsMock.__setStorageData([]);
+
     app = express();
     app.use('/', new JSONStorage({
       filepath: filepath
@@ -30,14 +43,6 @@ describe('JSONStorage', function() {
   describe('GET /bookmarks', function() {
 
     var path = '/bookmarks';
-
-    beforeEach(function() {
-      mockStorageData([]);
-    });
-
-    afterEach(function() {
-      fs.restore();
-    });
 
     it('responds with 200', function(done) {
       request(app).get(path).expect(200, done);
@@ -53,14 +58,14 @@ describe('JSONStorage', function() {
 
     it('responds with the content of the JSON file', function(done) {
       var json = [{key: 1}, {key: 2}];
-      mockStorageData(json);
+      fsMock.__setStorageData(json);
       request(app).get(path).expect(JSON.stringify(json), done);
     });
 
     describe('when the file is not found', function() {
 
       beforeEach(function() {
-        fs({});
+        fsMock.__setStorageData(null);
       });
 
       it('responds with 500', function(done) {
