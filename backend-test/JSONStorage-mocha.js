@@ -9,7 +9,7 @@ var JSONStorage = rewire('./../backend/JSONStorage');
 
 describe('JSONStorage', function() {
 
-  var app,
+  var app, req,
       filename = 'bookmarks.json', filepath = __dirname + '/' + filename,
       fsMock;
 
@@ -54,24 +54,26 @@ describe('JSONStorage', function() {
 
   describe('GET /bookmarks', function() {
 
-    var path = '/bookmarks';
+    beforeEach(function() {
+      req = request(app).get('/bookmarks');
+    });
 
     it('responds with 200', function(done) {
-      request(app).get(path).expect(200, done);
+      req.expect(200, done);
     });
 
     it('responds in json format', function(done) {
-      request(app).get(path).expect('Content-Type', /json/, done);
+      req.expect('Content-Type', /json/, done);
     });
 
     it('responds with an empty array by default', function(done) {
-      request(app).get(path).expect('[]', done);
+      req.expect('[]', done);
     });
 
     it('responds with the content of the JSON file', function(done) {
       var json = [{key: 1}, {key: 2}];
       fsMock.__setStorageData(json);
-      request(app).get(path).expect(JSON.stringify(json), done);
+      req.expect(JSON.stringify(json), done);
     });
 
     describe('when the file is not found', function() {
@@ -81,14 +83,16 @@ describe('JSONStorage', function() {
       });
 
       it('responds with 500', function(done) {
-        request(app).get(path).expect(500, done);
+        req.expect(500, done);
       });
     });
   });
 
   describe('POST /bookmarks', function() {
 
-    var path = '/bookmarks';
+    beforeEach(function() {
+      req = request(app).post('/bookmarks').type('form');
+    });
 
     describe('with valid payload', function() {
 
@@ -99,23 +103,16 @@ describe('JSONStorage', function() {
           url: 'http://some-url.com',
           tags: '#some #tag'
         };
+        req.send(payload);
       });
 
       it('responds with 201', function(done) {
-        request(app)
-          .post(path)
-          .type('form')
-          .send(payload)
-          .expect(201, done);
+        req.expect(201, done);
       });
 
       it('adds the bookmark to the end of the JSON file', function(done) {
         fsMock.__setStorageData([{ url: 'initial', tags: '#initial' }]);
-        request(app)
-          .post(path)
-          .type('form')
-          .send(payload)
-          .expect(function() {
+        req.expect(function() {
             var json = JSON.parse(fsMock.__getStorageData());
             var lastRecord = json[json.length - 1];
             if (json.length === 0) {
@@ -138,11 +135,7 @@ describe('JSONStorage', function() {
         });
 
         it('responds with 500', function(done) {
-          request(app)
-            .post(path)
-            .type('form')
-            .send(payload)
-            .expect(500, done);
+          req.expect(500, done);
         });
       });
 
@@ -153,11 +146,7 @@ describe('JSONStorage', function() {
         });
 
         it('responds with 500', function(done) {
-          request(app)
-            .post(path)
-            .type('form')
-            .send(payload)
-            .expect(500, done);
+          req.expect(500, done);
         });
       });
     });
@@ -168,13 +157,11 @@ describe('JSONStorage', function() {
 
       beforeEach(function() {
         payload = {};
+        req.send(payload);
       });
 
       it('responds with 400', function(done) {
-        request(app).post(path)
-          .type('form')
-          .send(payload)
-          .expect(400, done);
+        req.expect(400, done);
       });
     });
   });
