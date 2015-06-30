@@ -13,6 +13,8 @@ describe('JSONStorage', function() {
       filename = 'bookmarks.json', filepath = __dirname + '/' + filename,
       fsMock;
 
+  var STORAGE_DATA_FILE_NOT_FOUND = null;
+
   var mockFilesystem = function() {
     var fs = {
       callWriteFileCallbackWithError: false,
@@ -79,7 +81,7 @@ describe('JSONStorage', function() {
     describe('when the file is not found', function() {
 
       beforeEach(function() {
-        fsMock.__setStorageData(null);
+        fsMock.__setStorageData(STORAGE_DATA_FILE_NOT_FOUND);
       });
 
       it('responds with 500', function(done) {
@@ -131,7 +133,7 @@ describe('JSONStorage', function() {
       describe('when the file is not found', function() {
 
         beforeEach(function() {
-          fsMock.__setStorageData(null);
+          fsMock.__setStorageData(STORAGE_DATA_FILE_NOT_FOUND);
         });
 
         it('responds with 500', function(done) {
