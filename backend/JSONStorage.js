@@ -19,7 +19,22 @@ module.exports = function(config) {
 
   router.post('/bookmarks', function(req, res) {
     if (req.body.url && req.body.tags) {
-      res.sendStatus(201);
+      fs.readFile(config.filepath, function(err, data) {
+        if (err) {
+          return res.sendStatus(500);
+        }
+        var json = JSON.parse(data.toString());
+        json.push({
+          url: req.body.url,
+          tags: req.body.tags
+        });
+        fs.writeFile(config.filepath, JSON.stringify(json), function(err2) {
+          if (err2) {
+            return res.sendStatus(500);
+          }
+          res.sendStatus(201);
+        });
+      });
     } else {
       res.sendStatus(400);
     }
