@@ -54,10 +54,10 @@ describe('JSONStorage', function() {
     }));
   });
 
-  describe('GET /bookmarks', function() {
+  describe('GET /', function() {
 
     beforeEach(function() {
-      req = request(app).get('/bookmarks');
+      req = request(app).get('/');
     });
 
     it('responds with 200', function(done) {
@@ -90,10 +90,10 @@ describe('JSONStorage', function() {
     });
   });
 
-  describe('POST /bookmarks', function() {
+  describe('POST /', function() {
 
     beforeEach(function() {
-      req = request(app).post('/bookmarks').type('form');
+      req = request(app).post('/').type('form');
     });
 
     describe('with valid payload', function() {

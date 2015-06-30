@@ -8,7 +8,7 @@ module.exports = function(config) {
   var router = new express.Router();
   router.use(bodyParser.urlencoded({ extended: true }));
 
-  router.get('/bookmarks', function(req, res) {
+  router.get('/', function(req, res) {
     fs.readFile(config.filepath, function(err, data) {
       if (err) {
         return res.status(500).send(err);
@@ -17,7 +17,7 @@ module.exports = function(config) {
     });
   });
 
-  router.post('/bookmarks', function(req, res) {
+  router.post('/', function(req, res) {
     if (req.body.url && req.body.tags) {
       fs.readFile(config.filepath, function(err, data) {
         if (err) {
