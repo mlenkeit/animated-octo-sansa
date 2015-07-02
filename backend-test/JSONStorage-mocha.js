@@ -3,6 +3,7 @@
 'use strict';
 
 var rewire = require('rewire');
+var expect = require('chai').expect;
 var express = require('express');
 var request = require('supertest');
 var JSONStorage = rewire('./../backend/JSONStorage');
@@ -15,37 +16,18 @@ describe('JSONStorage', function() {
 
   var STORAGE_DATA_FILE_NOT_FOUND = null;
 
-  var mockFilesystem = function() {
-    var fs = {
-      callWriteFileCallbackWithError: false,
-      fileContentsByPath: {},
-      readFile: function(path, cb) {
-        var content = this.fileContentsByPath[path];
-        return process.nextTick(function() {
-          return cb(!content, new Buffer(content || ''));
-        });
-      },
-      writeFile: function(path, data, cb) {
-        var fail = this.callWriteFileCallbackWithError;
-        this.callWriteFileCallbackWithError = false;
-        this.fileContentsByPath[path] = data.toString();
-        return process.nextTick(function() {
-          return cb(fail ? {} : null);
-        });
-      },
-      __setStorageData: function(data) {
-        this.fileContentsByPath[filepath] = data ? JSON.stringify(data) : null;
-      },
-      __getStorageData: function() {
-        return this.fileContentsByPath[filepath];
-      }
-    };
-    JSONStorage.__set__('fs', fs);
-    return fs;
-  };
-
   beforeEach(function() {
-    fsMock = mockFilesystem();
+    fsMock = require('./fs-mock');
+    fsMock.__setStorageData = function(data) {
+      fsMock.readFileStub.withArgs(filepath).returns(data ? JSON.stringify(data) : null);
+    };
+    fsMock.__getStorageData = function() {
+      var data = fsMock.writeFileStub.args.length > 0 ?
+        fsMock.writeFileStub.args[fsMock.writeFileStub.args.length - 1][1] :
+        fsMock.readFileStub(filepath);
+      return data;
+    };
+    JSONStorage.__set__('fs', fsMock);
     fsMock.__setStorageData([]);
 
     app = express();
@@ -117,15 +99,9 @@ describe('JSONStorage', function() {
         req.expect(function() {
             var json = JSON.parse(fsMock.__getStorageData());
             var lastRecord = json[json.length - 1];
-            if (json.length === 0) {
-              throw new Error('no record found');
-            }
-            if (lastRecord.url !== payload.url) {
-              throw new Error('url property is not identical');
-            }
-            if (lastRecord.tags !== payload.tags) {
-              throw new Error('tags property is not identical');
-            }
+            expect(json).to.have.length.above(0);
+            expect(lastRecord.url).to.equal(payload.url);
+            expect(lastRecord.tags).to.equal(payload.tags);
           })
           .end(done);
       });
@@ -144,7 +120,7 @@ describe('JSONStorage', function() {
       describe('when writing to the file fails', function() {
 
         beforeEach(function() {
-          fsMock.callWriteFileCallbackWithError = true;
+          fsMock.writeFileStub.returns(false);
         });
 
         it('responds with 500', function(done) {
