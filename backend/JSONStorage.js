@@ -9,8 +9,28 @@ module.exports = function(config) {
     throw new Error('Mandatory config parameter \'filepath\' missing.');
   }
 
+  var initialized = false;
+
   var router = new express.Router();
   router.use(bodyParser.urlencoded({ extended: true }));
+  router.use(function(req, res, next) {
+    if (!initialized) {
+      initialized = initializeJSON();
+    }
+    return initialized.then(function() {
+      next();
+    }).catch(function(err) {
+      res.status(err.status).send(err.msg);
+    });
+  });
+
+  function existsJSON() {
+    return new Promise(function(resolve) {
+      fs.exists(config.filepath, function(exists) {
+        resolve(exists);
+      });
+    });
+  }
 
   function readJSON() {
     return new Promise(function(resolve, reject) {
@@ -40,6 +60,14 @@ module.exports = function(config) {
         return reject({ status: 400 });
       }
       resolve(bookmark);
+    });
+  }
+
+  function initializeJSON() {
+    return existsJSON().then(function(exists) {
+      if (!exists) {
+        return writeJSON([]);
+      }
     });
   }
 

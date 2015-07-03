@@ -26,6 +26,7 @@ describe('JSONStorage', function() {
         filename = 'bookmarks.json', filepath = __dirname + '/' + filename,
         fsMock;
 
+    var RANDOM_INVALID_PATH = '/invalid-path';
     var STORAGE_DATA_FILE_NOT_FOUND = null;
 
     beforeEach(function() {
@@ -46,6 +47,24 @@ describe('JSONStorage', function() {
       app.use('/', new JSONStorage({
         filepath: filepath
       }));
+    });
+
+    it('does not process any request until the json file is creaed', function(done) {
+      fsMock.existsStub.withArgs(filepath).returns(false);
+      fsMock.writeFileStub.withArgs(filepath).returns(true);
+      request(app).get(RANDOM_INVALID_PATH).end(function() {
+        expect(fsMock.exists.callCount).to.equal(1, 'fs.exists callCount');
+        expect(fsMock.writeFile.callCount).to.equal(1, 'fs.writeFile callCount');
+        done();
+      });
+    });
+
+    it('processes requests directly if the json file exists', function(done) {
+      fsMock.existsStub.withArgs(filepath).returns(true);
+      request(app).get(RANDOM_INVALID_PATH).expect(404).end(function() {
+        expect(fsMock.writeFile.callCount).to.equal(0, 'fs.writeFile callCount');
+        done();
+      });
     });
 
     describe('GET /', function() {
