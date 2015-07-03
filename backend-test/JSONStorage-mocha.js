@@ -29,7 +29,7 @@ describe('JSONStorage', function() {
     var STORAGE_DATA_FILE_NOT_FOUND = null;
 
     beforeEach(function() {
-      fsMock = require('./fs-mock');
+      fsMock = require('./fs-mock')();
       fsMock.__setStorageData = function(data) {
         fsMock.readFileStub.withArgs(filepath).returns(data ? JSON.stringify(data) : null);
       };
