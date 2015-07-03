@@ -5,6 +5,9 @@ var express = require('express');
 var fs = require('fs');
 
 module.exports = function(config) {
+  if (!config.filepath) {
+    throw new Error('Mandatory config parameter \'filepath\' missing.');
+  }
 
   var router = new express.Router();
   router.use(bodyParser.urlencoded({ extended: true }));

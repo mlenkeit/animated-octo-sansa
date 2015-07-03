@@ -10,6 +10,16 @@ var JSONStorage = rewire('./../backend/JSONStorage');
 
 describe('JSONStorage', function() {
 
+  describe('constructor()', function() {
+
+    it('throws an exception when created without filepath', function() {
+      expect(function() {
+        /*eslint no-new: 0*/
+        new JSONStorage({});
+      }).to.throw(/mandatory.*filepath/i);
+    });
+  });
+
   describe('when mounted', function() {
 
     var app, req,
