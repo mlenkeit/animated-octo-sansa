@@ -8,6 +8,14 @@ var express = require('express');
 var request = require('supertest');
 var JSONStorage = rewire('./../backend/JSONStorage');
 var logger = require('./fake-logger');
+var sinon = require('sinon');
+
+function logsAnErrorViaTheLogger(done, req, config) {
+  req.expect(function() {
+    expect(config.logger.error.calledWith(sinon.match.string)).to.be.true;
+    done();
+  }).end();
+}
 
 describe('JSONStorage', function() {
 
@@ -123,6 +131,10 @@ describe('JSONStorage', function() {
         it('responds with 500', function(done) {
           req.expect(500, done);
         });
+
+        it('logs an error via the logger', function(done) {
+          logsAnErrorViaTheLogger(done, req, config);
+        });
       });
     });
 
@@ -169,6 +181,10 @@ describe('JSONStorage', function() {
           it('responds with 500', function(done) {
             req.expect(500, done);
           });
+
+          it('logs an error via the logger', function(done) {
+            logsAnErrorViaTheLogger(done, req, config);
+          });
         });
 
         describe('when writing to the file fails', function() {
@@ -179,6 +195,10 @@ describe('JSONStorage', function() {
 
           it('responds with 500', function(done) {
             req.expect(500, done);
+          });
+
+          it('logs an error via the logger', function(done) {
+            logsAnErrorViaTheLogger(done, req, config);
           });
         });
       });
@@ -194,6 +214,10 @@ describe('JSONStorage', function() {
 
         it('responds with 400', function(done) {
           req.expect(400, done);
+        });
+
+        it('logs an error via the logger', function(done) {
+          logsAnErrorViaTheLogger(done, req, config);
         });
       });
     });

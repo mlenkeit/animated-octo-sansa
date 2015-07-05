@@ -22,9 +22,7 @@ module.exports = function(config) {
     }
     return initialized.then(function() {
       next();
-    }).catch(function(err) {
-      res.status(err.status).send(err.msg);
-    });
+    }).catch(next);
   });
 
   function existsJSON() {
@@ -39,7 +37,8 @@ module.exports = function(config) {
     return new Promise(function(resolve, reject) {
       fs.readFile(config.filepath, function(err, data) {
         if (err) {
-          return reject({ msg: err, status: 500});
+          err.status = 500;
+          return reject(err);
         }
         resolve(JSON.parse(data.toString()));
       });
@@ -50,7 +49,8 @@ module.exports = function(config) {
     return new Promise(function(resolve, reject) {
       fs.writeFile(config.filepath, JSON.stringify(json), function(err) {
         if (err) {
-          return reject({ status: 500 });
+          err.status = 500;
+          return reject(err);
         }
         resolve();
       });
@@ -60,7 +60,9 @@ module.exports = function(config) {
   function validateBookmark(bookmark) {
     return new Promise(function(resolve, reject) {
       if (!bookmark.url || !bookmark.tags) {
-        return reject({ status: 400 });
+        var err = new Error('Invalid bookmark: ' + JSON.stringify(bookmark));
+        err.status = 400;
+        return reject(err);
       }
       resolve(bookmark);
     });
@@ -74,15 +76,13 @@ module.exports = function(config) {
     });
   }
 
-  app.get('/', function(req, res) {
-    readJSON().then(function(json) {
+  app.get('/', function(req, res, next) {
+    return readJSON().then(function(json) {
       res.json(json);
-    }).catch(function(err) {
-      res.status(err.status).send(err.msg);
-    });
+    }).catch(next);
   });
 
-  app.post('/', function(req, res) {
+  app.post('/', function(req, res, next) {
     validateBookmark(req.body).then(function(bookmark) {
       return readJSON().then(function(json) {
         json.push(bookmark);
@@ -90,10 +90,16 @@ module.exports = function(config) {
           res.sendStatus(201);
         });
       });
-    }).catch(function(err) {
-      res.status(err.status).send(err.msg);
-    });
+    }).catch(next);
   });
+
+  /*eslint-disable no-unused-vars*/
+  app.use(function(err, req, res, next) {
+    var status = err.status || 500;
+    config.logger.error(err.toString(), err);
+    return res.status(status).send(err.toString());
+  });
+  /*eslint-enable no-unused-vars*/
 
   return app;
 };
