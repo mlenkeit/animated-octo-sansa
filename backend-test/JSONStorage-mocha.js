@@ -20,10 +20,19 @@ describe('JSONStorage', function() {
 
   describe('constructor()', function() {
 
+    var config;
+
+    beforeEach(function() {
+      config = {
+        filepath: 'some-file.json'
+      };
+    })
+
     it('throws an exception when created without filepath', function() {
+      delete config.filepath;
       expect(function() {
         /*eslint no-new: 0*/
-        new JSONStorage({});
+        new JSONStorage(config);
       }).to.throw(/mandatory.*filepath/i);
     });
   });
