@@ -7,7 +7,7 @@ var expect = require('chai').expect;
 var express = require('express');
 var request = require('supertest');
 var JSONStorage = rewire('./../backend/JSONStorage');
-var logger = require('./fake-logger');
+var Logger = require('./FakeLogger');
 var sinon = require('sinon');
 
 function logsAnErrorViaTheLogger(done, req, config) {
@@ -25,7 +25,7 @@ describe('JSONStorage', function() {
   beforeEach(function() {
     config = {
       filepath: filepath,
-      logger: logger()
+      logger: new Logger()
     };
   });
 
