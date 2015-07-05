@@ -55,23 +55,26 @@ describe('App', function() {
     expect(app.listen).to.be.a('function', 'duck-typing for listen()');
   });
 
-  it('mounts a JSONStorage middleware to /api/bookmarks', function() {
-    var middleware = JSONStorage.returnValues[0];
-    expect(middleware.mountpath).to.equal('/api/bookmarks');
-  });
+  describe('constructor()', function() {
 
-  it('passes the filepath to the JSONStorage middleware', function() {
-    var args = JSONStorage.args[0];
-    expect(args[0].filepath).to.equal(filepath);
-  });
+    it('mounts a JSONStorage middleware to /api/bookmarks', function() {
+      var middleware = JSONStorage.returnValues[0];
+      expect(middleware.mountpath).to.equal('/api/bookmarks');
+    });
 
-  it('passes the logger to the JSONStorage middleware', function() {
-    var args = JSONStorage.args[0];
-    expect(args[0].logger).to.equal(config.logger);
-  });
+    it('passes the filepath to the JSONStorage middleware', function() {
+      var args = JSONStorage.args[0];
+      expect(args[0].filepath).to.equal(filepath);
+    });
 
-  it('mounts the static files as per config parameter to the root path', function() {
-    expect(express.static.called).to.equal(true, 'express.static called');
-    expect(express.static.args[0][0]).to.equal(staticFiles);
+    it('passes the logger to the JSONStorage middleware', function() {
+      var args = JSONStorage.args[0];
+      expect(args[0].logger).to.equal(config.logger);
+    });
+
+    it('mounts the static files as per config parameter to the root path', function() {
+      expect(express.static.called).to.equal(true, 'express.static called');
+      expect(express.static.args[0][0]).to.equal(staticFiles);
+    });
   });
 });
