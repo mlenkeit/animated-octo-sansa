@@ -3,6 +3,7 @@
 'use strict';
 
 var expect = require('chai').expect;
+var sinon = require('sinon');
 var rewire = require('rewire');
 var App = rewire('./../backend/App');
 
@@ -23,19 +24,25 @@ function spyOnConstructor(Constructor) {
 
 describe('App', function() {
 
-  var app, JSONStorage,
-      filepath = 'bookmarks.json';
+  var app, JSONStorage, express,
+      filepath = 'bookmarks.json', staticFiles = 'static';
 
   beforeEach(function() {
     JSONStorage = spyOnConstructor(App.__get__('JSONStorage'));
     App.__set__('JSONStorage', JSONStorage);
 
+    express = App.__get__('express');
+    sinon.spy(express, 'static');
+
     app = new App({
-      filepath: filepath
+      filepath: filepath,
+      serve: staticFiles
     });
+    sinon.spy(app, 'use');
   });
 
   afterEach(function() {
+    express.static.restore();
     JSONStorage.reset();
   });
 
@@ -51,5 +58,10 @@ describe('App', function() {
   it('passes the filepath to the JSONStorage middleware', function() {
     var args = JSONStorage.args[0];
     expect(args[0].filepath).to.equal(filepath);
+  });
+
+  it('mounts the static files as per config parameter to the root path', function() {
+    expect(express.static.called).to.equal(true, 'express.static called');
+    expect(express.static.args[0][0]).to.equal(staticFiles);
   });
 });

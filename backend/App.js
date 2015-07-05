@@ -11,5 +11,7 @@ module.exports = function(config) {
   });
   app.use('/api/bookmarks', router);
 
+  app.use('/', express.static(config.serve));
+
   return app;
 };
