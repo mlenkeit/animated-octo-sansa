@@ -3,11 +3,13 @@
 var sinon = require('sinon');
 
 module.exports = function() {
-  return {
-    debug: sinon.spy(),
-    verbose: sinon.spy(),
-    info: sinon.spy(),
-    warn: sinon.spy(),
-    error: sinon.spy()
+  var logger = {
+    debug: sinon.stub(),
+    verbose: sinon.stub(),
+    info: sinon.stub(),
+    warn: sinon.stub(),
+    error: sinon.stub()
   };
+
+  return logger;
 };
