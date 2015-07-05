@@ -31,7 +31,6 @@
     "body-parser": "1.8.1",
     "express": "^4.13.0",
     "flux": "^2.0.3",
-    "http-server": "^0.8.0",
     "react": "^0.13.3",
     "react-intl": "^1.2.0",
     "winston": "^1.0.1"
