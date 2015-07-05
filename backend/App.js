@@ -7,7 +7,8 @@ module.exports = function(config) {
   var app = express();
 
   var router = new JSONStorage({
-    filepath: config.filepath
+    filepath: config.filepath,
+    logger: config.logger
   });
   app.use('/api/bookmarks', router);
 

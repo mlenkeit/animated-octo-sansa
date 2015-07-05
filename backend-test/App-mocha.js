@@ -5,6 +5,7 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var rewire = require('rewire');
+var Logger = require('./FakeLogger');
 var App = rewire('./../backend/App');
 
 function spyOnConstructor(Constructor) {
@@ -25,7 +26,8 @@ function spyOnConstructor(Constructor) {
 describe('App', function() {
 
   var app, JSONStorage, express,
-      filepath = 'bookmarks.json', staticFiles = 'static';
+      filepath = 'bookmarks.json', staticFiles = 'static',
+      config;
 
   beforeEach(function() {
     JSONStorage = spyOnConstructor(App.__get__('JSONStorage'));
@@ -34,10 +36,13 @@ describe('App', function() {
     express = App.__get__('express');
     sinon.spy(express, 'static');
 
-    app = new App({
+    config = {
       filepath: filepath,
+      logger: new Logger(),
       serve: staticFiles
-    });
+    };
+
+    app = new App(config);
     sinon.spy(app, 'use');
   });
 
@@ -58,6 +63,11 @@ describe('App', function() {
   it('passes the filepath to the JSONStorage middleware', function() {
     var args = JSONStorage.args[0];
     expect(args[0].filepath).to.equal(filepath);
+  });
+
+  it('passes the logger to the JSONStorage middleware', function() {
+    var args = JSONStorage.args[0];
+    expect(args[0].logger).to.equal(config.logger);
   });
 
   it('mounts the static files as per config parameter to the root path', function() {
