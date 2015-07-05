@@ -12,8 +12,8 @@
     "react-tdd": "mocha --compilers react:react-test/compiler.js react-test/**/*-mocha.js --watch",
     "react-test": "mocha --compilers react:react-test/compiler.js react-test/**/*-mocha.js",
     "build": "npm run react-build",
-    "linter": "eslint backend backend-test react react-test",
-    "start": "http-server ./dist -i -d -o",
+    "linter": "eslint backend backend-test react react-test server.js",
+    "start": "node server.js",
     "test": "npm run linter && npm run backend-test && npm run react-test",
     "tdd": "npm run react-tdd"
   },
