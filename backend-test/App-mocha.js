@@ -43,9 +43,9 @@ describe('App', function() {
     expect(app.listen).to.be.a('function', 'duck-typing for listen()');
   });
 
-  it('mounts a JSONStorage middleware to /bookmarks', function() {
+  it('mounts a JSONStorage middleware to /api/bookmarks', function() {
     var middleware = JSONStorage.returnValues[0];
-    expect(middleware.mountpath).to.equal('/bookmarks');
+    expect(middleware.mountpath).to.equal('/api/bookmarks');
   });
 
   it('passes the filepath to the JSONStorage middleware', function() {

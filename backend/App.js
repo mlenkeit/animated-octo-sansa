@@ -9,7 +9,7 @@ module.exports = function(config) {
   var router = new JSONStorage({
     filepath: config.filepath
   });
-  app.use('/bookmarks', router);
+  app.use('/api/bookmarks', router);
 
   return app;
 };
