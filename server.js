@@ -9,7 +9,7 @@ var app = new App({
   logger: logger,
   serve: __dirname + '/dist'
 });
-var port = 8080;
+var port = process.env.PORT || 8080;
 app.listen(port, function() {
   logger.info('Listening to port ' + port);
 });
