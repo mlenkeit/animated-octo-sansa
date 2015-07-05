@@ -2,13 +2,15 @@
 /*eslint no-unused-expressions: 0*/
 'use strict';
 
-describe('logger', function() {
+var Logger = require('./../backend/Logger');
+
+describe('Logger', function() {
 
   var logger,
       msg, metadata;
 
   beforeEach(function() {
-    logger = require('./../backend/logger')();
+    logger = new Logger();
     msg = 'some message';
     metadata = {};
   });
