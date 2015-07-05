@@ -8,6 +8,9 @@ module.exports = function(config) {
   if (!config.filepath) {
     throw new Error('Mandatory config parameter \'filepath\' missing.');
   }
+  if (!config.logger) {
+    throw new Error('Mandatory config parameter \'logger\' missing');
+  }
 
   var initialized = false;
 

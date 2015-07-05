@@ -7,12 +7,14 @@ var expect = require('chai').expect;
 var express = require('express');
 var request = require('supertest');
 var JSONStorage = rewire('./../backend/JSONStorage');
+var logger = require('./fake-logger');
 
 describe('JSONStorage', function() {
 
   it('is an express application', function() {
     var middleware = new JSONStorage({
-      filepath: 'some-file'
+      filepath: 'some-file',
+      logger: logger()
     });
     expect(middleware.path).to.be.a('function', 'duck-typing for path()');
     expect(middleware).to.ownProperty('mountpath', 'duck-typing for mountpath');
@@ -24,9 +26,10 @@ describe('JSONStorage', function() {
 
     beforeEach(function() {
       config = {
-        filepath: 'some-file.json'
+        filepath: 'some-file.json',
+        logger: logger()
       };
-    })
+    });
 
     it('throws an exception when created without filepath', function() {
       delete config.filepath;
@@ -34,6 +37,14 @@ describe('JSONStorage', function() {
         /*eslint no-new: 0*/
         new JSONStorage(config);
       }).to.throw(/mandatory.*filepath/i);
+    });
+
+    it('throws an exception when created without logger', function() {
+      delete config.logger;
+      expect(function() {
+        /*eslint no-new: 0*/
+        new JSONStorage(config);
+      }).to.throw(/mandatory.*logger/i);
     });
   });
 
@@ -62,7 +73,8 @@ describe('JSONStorage', function() {
 
       app = express();
       app.use('/', new JSONStorage({
-        filepath: filepath
+        filepath: filepath,
+        logger: logger()
       }));
     });
 
