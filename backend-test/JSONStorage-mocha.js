@@ -10,6 +10,14 @@ var JSONStorage = rewire('./../backend/JSONStorage');
 
 describe('JSONStorage', function() {
 
+  it('is an express application', function() {
+    var middleware = new JSONStorage({
+      filepath: 'some-file'
+    });
+    expect(middleware.path).to.be.a('function', 'duck-typing for path()');
+    expect(middleware).to.ownProperty('mountpath', 'duck-typing for mountpath');
+  });
+
   describe('constructor()', function() {
 
     it('throws an exception when created without filepath', function() {

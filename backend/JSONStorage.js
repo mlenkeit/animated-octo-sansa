@@ -11,9 +11,9 @@ module.exports = function(config) {
 
   var initialized = false;
 
-  var router = new express.Router();
-  router.use(bodyParser.urlencoded({ extended: true }));
-  router.use(function(req, res, next) {
+  var app = express();
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(function(req, res, next) {
     if (!initialized) {
       initialized = initializeJSON();
     }
@@ -71,7 +71,7 @@ module.exports = function(config) {
     });
   }
 
-  router.get('/', function(req, res) {
+  app.get('/', function(req, res) {
     readJSON().then(function(json) {
       res.json(json);
     }).catch(function(err) {
@@ -79,7 +79,7 @@ module.exports = function(config) {
     });
   });
 
-  router.post('/', function(req, res) {
+  app.post('/', function(req, res) {
     validateBookmark(req.body).then(function(bookmark) {
       return readJSON().then(function(json) {
         json.push(bookmark);
@@ -92,5 +92,5 @@ module.exports = function(config) {
     });
   });
 
-  return router;
+  return app;
 };
