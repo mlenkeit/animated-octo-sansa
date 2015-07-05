@@ -11,25 +11,23 @@ var logger = require('./fake-logger');
 
 describe('JSONStorage', function() {
 
-  it('is an express application', function() {
-    var middleware = new JSONStorage({
-      filepath: 'some-file',
+  var filename = 'bookmarks.json', filepath = __dirname + '/' + filename,
+      config;
+
+  beforeEach(function() {
+    config = {
+      filepath: filepath,
       logger: logger()
-    });
+    };
+  });
+
+  it('is an express application', function() {
+    var middleware = new JSONStorage(config);
     expect(middleware.path).to.be.a('function', 'duck-typing for path()');
     expect(middleware).to.ownProperty('mountpath', 'duck-typing for mountpath');
   });
 
   describe('constructor()', function() {
-
-    var config;
-
-    beforeEach(function() {
-      config = {
-        filepath: 'some-file.json',
-        logger: logger()
-      };
-    });
 
     it('throws an exception when created without filepath', function() {
       delete config.filepath;
@@ -51,7 +49,6 @@ describe('JSONStorage', function() {
   describe('when mounted', function() {
 
     var app, req,
-        filename = 'bookmarks.json', filepath = __dirname + '/' + filename,
         fsMock;
 
     var RANDOM_INVALID_PATH = '/invalid-path';
@@ -72,10 +69,7 @@ describe('JSONStorage', function() {
       fsMock.__setStorageData([]);
 
       app = express();
-      app.use('/', new JSONStorage({
-        filepath: filepath,
-        logger: logger()
-      }));
+      app.use('/', new JSONStorage(config));
     });
 
     it('does not process any request until the json file is creaed', function(done) {
