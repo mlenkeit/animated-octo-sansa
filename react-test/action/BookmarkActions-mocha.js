@@ -114,6 +114,20 @@ describe('BookmarkActions', function() {
 
       actions.refresh();
     });
+
+    it('dispatches a RefreshBookmarksFailure action after a failed GET request to /api/bookmarks', function(done) {
+      nockScope.get('/api/bookmarks')
+      .reply(500);
+
+      dispatcher.register(function(action) {
+        if (action.name === 'RefreshBookmarksFailure') {
+          nockScope.done();
+          done();
+        }
+      });
+
+      actions.refresh();
+    });
   });
 
 });

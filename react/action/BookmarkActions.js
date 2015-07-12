@@ -42,7 +42,9 @@ module.exports = function(dispatcher, host) {
     request.get(host + '/api/bookmarks')
       .end(function(err, res) {
         if (err) {
-          // TODO
+          return dispatcher.dispatch({
+            name: 'RefreshBookmarksFailure'
+          });
         }
         dispatcher.dispatch({
           name: 'RefreshBookmarksSuccess',
