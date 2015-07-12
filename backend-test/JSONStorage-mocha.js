@@ -141,7 +141,7 @@ describe('JSONStorage', function() {
     describe('POST /', function() {
 
       beforeEach(function() {
-        req = request(app).post('/').type('form');
+        req = request(app).post('/').type('json');
       });
 
       describe('with valid payload', function() {

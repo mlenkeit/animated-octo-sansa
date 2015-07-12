@@ -15,7 +15,7 @@ module.exports = function(config) {
   var initialized = false;
 
   var app = express();
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
   app.use(function(req, res, next) {
     if (!initialized) {
       initialized = initializeJSON();
