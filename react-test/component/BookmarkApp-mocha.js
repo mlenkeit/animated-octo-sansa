@@ -55,6 +55,10 @@ describe('BookmarkApp', function() {
     expect(listComponent.props.bookmarks).to.equal(bookmarksStore.getAll());
   });
 
+  it('triggers the refresh action', function() {
+    expect(bookmarkActions.refresh.called).to.be.true;
+  });
+
   describe('when the form is submitted', function() {
 
     var formComponent,

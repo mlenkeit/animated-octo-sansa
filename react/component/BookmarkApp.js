@@ -12,6 +12,7 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     this.props.store.attachChangeListener(this._handleChange);
+    this.props.actions.refresh();
   },
 
   componentWillUnmount: function() {
