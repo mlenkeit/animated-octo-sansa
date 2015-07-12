@@ -17,6 +17,10 @@ module.exports = function(dispatcher) {
       });
       eventEmitter.emit(CHANGE_EVENT);
     },
+    handleRefreshBookmarksSuccess: function(payload) {
+      bookmarks = payload;
+      eventEmitter.emit(CHANGE_EVENT);
+    },
     handleUpdateBookmark: function(payload) {
       bookmarks.forEach(function(bookmark) {
         if (bookmark.url === payload.url) {

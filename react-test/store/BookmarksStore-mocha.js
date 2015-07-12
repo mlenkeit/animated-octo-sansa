@@ -107,5 +107,33 @@ describe('BookmarksStore', function() {
         expect(detachedChangeListener.called).to.equal(false, 'detached listener');
       });
     });
+
+    describe('when a RefreshBookmarksSuccess action is dispatched', function() {
+
+      var bookmarks;
+
+      beforeEach(function() {
+        bookmarks = [{
+          url: 'http://some-url.com',
+          tags: '#tags'
+        }, {
+          url: 'http://another-url.com',
+          tags: '#anotherTag'
+        }];
+        dispatcher.dispatch({
+          name: 'RefreshBookmarksSuccess',
+          payload: bookmarks
+        });
+      });
+
+      it('updates the bookmarks in the store', function() {
+        expect(store.getAll()).to.deep.equal(bookmarks);
+      });
+
+      it('notifies change listeners', function() {
+        expect(attachedChangeListener.called).to.equal(true, 'attached listener');
+        expect(detachedChangeListener.called).to.equal(false, 'detached listener');
+      });
+    });
   });
 });
