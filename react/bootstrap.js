@@ -13,7 +13,8 @@ var intlData = {
   }
 };
 var dispatcher = new Dispatcher();
-var actions = new BookmarkActions(dispatcher);
+var host = '.';
+var actions = new BookmarkActions(dispatcher, host);
 var store = new BookmarksStore(dispatcher);
 
 React.render(
