@@ -83,4 +83,37 @@ describe('BookmarkActions', function() {
     });
   });
 
+  describe('refresh()', function() {
+
+    var nockScope,
+        bookmarks;
+
+    beforeEach(function() {
+      nockScope = nock(host);
+      bookmarks = [{
+        url: 'http://some-url.com',
+        tags: '#tags'
+      }, {
+        url: 'http://another-url.com',
+        tags: '#anotherTag'
+      }];
+    });
+
+    it('dispatches a RefreshBookmarksSuccess action after a successfull GET request to /api/bookmarks', function(done) {
+      nockScope.get('/api/bookmarks')
+      .reply(200, bookmarks);
+
+      dispatcher.register(function(action) {
+        if (action.name === 'RefreshBookmarksSuccess') {
+          expect(action).to.have.property('payload')
+            .that.deep.equals(bookmarks);
+          nockScope.done();
+          done();
+        }
+      });
+
+      actions.refresh();
+    });
+  });
+
 });

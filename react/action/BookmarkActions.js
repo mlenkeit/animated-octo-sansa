@@ -18,7 +18,7 @@ module.exports = function(dispatcher, host) {
         url: url,
         tags: tags
       })
-      .end(function(err, res) {
+      .end(function(err) {
         if (err) {
           return dispatcher.dispatch({
             name: 'CreateBookmarkFailure',
@@ -34,6 +34,19 @@ module.exports = function(dispatcher, host) {
             url: url,
             tags: tags
           }
+        });
+      });
+  };
+
+  this.refresh = function() {
+    request.get(host + '/api/bookmarks')
+      .end(function(err, res) {
+        if (err) {
+          // TODO
+        }
+        dispatcher.dispatch({
+          name: 'RefreshBookmarksSuccess',
+          payload: res.body
         });
       });
   };
